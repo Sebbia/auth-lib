@@ -1,0 +1,39 @@
+{
+  "name": "@sebbia/auth-client",
+  "version": "1.0.10",
+  "description": "Authorization/authentication client for SportID",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@mixer/postmessage-rpc": "^1.1.4",
+    "apollo-link-token-refresh": "^0.2.7"
+  },
+  "files": [
+    "lib/**"
+  ],
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "jest": "^25.1.0",
+    "jest-fetch-mock": "^3.0.1",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5",
+    "whatwg-fetch": "^3.0.0",
+    "graphql": "^14.6.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --config jest.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Sebbia/auth-lib.git"
+  },
+  "keywords": [
+    "authclient",
+    "client",
+    "auth",
+    "sportid"
+  ],
+  "author": "Sebbia",
+  "license": "ISC"
+}
