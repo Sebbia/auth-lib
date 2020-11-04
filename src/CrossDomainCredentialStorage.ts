@@ -22,10 +22,8 @@ export default class CrossDomainCredentialStorage implements CredentialStorage {
     const iframe: any = window.document.createElement('iframe');
     iframe.style.height = 0;
     iframe.style.width = 0;
+    iframe.style.display = "none";
     iframe.name = 'authClientIframe';
-    iframe.onload = () => {
-      console.log("<433b56d7> Frame loaded")
-    }
     document.body.appendChild(iframe);
     const iframeWin = window.frames.authClientIframe;
     let rpc = new RPC({
@@ -34,7 +32,6 @@ export default class CrossDomainCredentialStorage implements CredentialStorage {
     });
 
     rpc.expose('storageReady', () => {
-      console.log("<43a4b88b> Frame notified")
       this.isIframeLoaded = true;
     });
 
