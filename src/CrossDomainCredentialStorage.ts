@@ -1,8 +1,8 @@
 import { RPC } from '@mixer/postmessage-rpc';
-import AuthRPC from './AuthRPC'
+import AuthRPC from './AuthRPC';
+import Credentials from './Credentials';
 import CredentialStorage from './CredentialStorage';
 import { promiseTimeout } from './tools';
-import Credentials from './Credentials';
 
 declare global {
   interface Window {
@@ -24,15 +24,22 @@ export default class CrossDomainCredentialStorage implements CredentialStorage {
     iframe.style.width = 0;
     iframe.name = 'authClientIframe';
     iframe.onload = () => {
-      this.isIframeLoaded = true;
-    };
-    iframe.src = credentialStorageUrl;
+      console.log("<433b56d7> Frame loaded")
+    }
     document.body.appendChild(iframe);
     const iframeWin = window.frames.authClientIframe;
-    this.rpc = new RPC({
+    let rpc = new RPC({
       target: iframeWin,
       serviceId,
     });
+
+    rpc.expose('storageReady', () => {
+      console.log("<43a4b88b> Frame notified")
+      this.isIframeLoaded = true;
+    });
+
+    iframe.src = credentialStorageUrl;
+    this.rpc = rpc;
   }
 
   private delay(msec: number): Promise<void> {
@@ -57,6 +64,7 @@ export default class CrossDomainCredentialStorage implements CredentialStorage {
       })
     );
   }
+
   async getCredentials() {
     return await promiseTimeout(
       this.timeoutValue,
@@ -65,6 +73,7 @@ export default class CrossDomainCredentialStorage implements CredentialStorage {
       })
     );
   }
+
   async clearCredentials() {
     return await promiseTimeout(
       this.timeoutValue,
